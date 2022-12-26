@@ -3,14 +3,28 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("java")
     kotlin("jvm") version "1.7.20"
-    `maven-publish`
+    id("maven-publish")
 }
-
-group = "com.github.xvar"
-version = "1.0.2"
 
 repositories {
     mavenCentral()
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "com.github.xvar"
+            artifactId = "library"
+            version = "1.0.3"
+
+            from(components["java"])
+        }
+    }
 }
 
 dependencies {
